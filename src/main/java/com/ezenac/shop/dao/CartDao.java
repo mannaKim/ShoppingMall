@@ -56,4 +56,15 @@ public class CartDao {
 		} finally { Dbman.close(con, pstmt, rs); }
 		return list;
 	}
+
+	public void deleteCart(int cseq) {
+		String sql = "delete from cart where cseq=?";
+		con = Dbman.getConnection();
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, cseq);
+			pstmt.executeUpdate();
+		} catch (SQLException e) { e.printStackTrace();
+		} finally { Dbman.close(con, pstmt, rs); }
+	}
 }

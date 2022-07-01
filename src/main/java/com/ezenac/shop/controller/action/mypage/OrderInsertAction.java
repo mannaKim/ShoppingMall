@@ -10,32 +10,35 @@ import javax.servlet.http.HttpSession;
 
 import com.ezenac.shop.controller.action.Action;
 import com.ezenac.shop.dao.CartDao;
+import com.ezenac.shop.dao.OrderDao;
 import com.ezenac.shop.dto.CartVO;
 import com.ezenac.shop.dto.MemberVO;
 
-public class CartListAction implements Action {
+public class OrderInsertAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String url = "mypage/cartList.jsp"; 
+		String url = "";
 		
 		HttpSession session = request.getSession();
 		MemberVO mvo = (MemberVO)session.getAttribute("loginUser");
 		if(mvo==null) {
 			url="shop.do?command=loginForm";
 		}else {
-			//로그인유저의 아이디로 카트리스트를 검색해서 리턴받습니다.
+			//주문자 아이디로 검색한 카트 목록(지금 주문 처리할) 목록을 먼저 조회합니다
 			CartDao cdao = CartDao.getInstance();
 			ArrayList<CartVO> list = cdao.selectCart(mvo.getId());
-			request.setAttribute("cartList", list);
 			
-			int totalPrice = 0;
-			for(CartVO cvo:list) 
-				totalPrice += (cvo.getPrice2()*cvo.getQuantity());
-			request.setAttribute("totalPrice", totalPrice);
+			//추출한 list와 주문자의 아이디를 갖고 OrderDao에 가서 오더와 오더디테일에 데이터 추가
+			OrderDao odao = OrderDao.getInstance();
+			//주문 추가 후 추가한 주문의 주문번호를 리턴받습니다.
+			int oseq = odao.insertOrder(list, mvo.getId());
+			
+			//방금 주문에 성공한 주문번호를 갖고 오더리스트로 이동하여 주문번호로 주문내역을 다시 조회
+			url = "shop.do?command=orderList&oseq="+oseq;
 		}
-		request.getRequestDispatcher(url).forward(request, response);
+		response.sendRedirect(url);
 	}
 
 }

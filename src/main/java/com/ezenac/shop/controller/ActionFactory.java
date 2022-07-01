@@ -20,8 +20,11 @@ import com.ezenac.shop.controller.action.LoginFormAction;
 import com.ezenac.shop.controller.action.LogoutAction;
 import com.ezenac.shop.controller.action.MemberUpdateAction;
 import com.ezenac.shop.controller.action.ResetPwAction;
+import com.ezenac.shop.controller.action.mypage.CartDeleteAction;
 import com.ezenac.shop.controller.action.mypage.CartInsertAction;
 import com.ezenac.shop.controller.action.mypage.CartListAction;
+import com.ezenac.shop.controller.action.mypage.OrderInsertAction;
+import com.ezenac.shop.controller.action.mypage.OrderListAction;
 import com.ezenac.shop.controller.action.product.CategoryAction;
 import com.ezenac.shop.controller.action.product.ProductDetailAction;
 
@@ -59,6 +62,10 @@ public class ActionFactory {
 		
 		else if(command.equals("cartInsert")) ac = new CartInsertAction();
 		else if(command.equals("cartList")) ac = new CartListAction();
+		else if(command.equals("cartDelete")) ac = new CartDeleteAction();
+		else if(command.equals("orderInsert")) ac = new OrderInsertAction();
+		else if(command.equals("orderList")) ac = new OrderListAction(); //방금 주문한 주문내역
+		
 		
 		return ac;
 	}

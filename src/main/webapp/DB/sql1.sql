@@ -62,6 +62,8 @@ CREATE TABLE orders
 	PRIMARY KEY (oseq)
 );
 
+select * from orders;
+select * from order_detail;
 
 CREATE TABLE order_detail
 (

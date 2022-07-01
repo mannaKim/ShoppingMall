@@ -9,33 +9,33 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.ezenac.shop.controller.action.Action;
-import com.ezenac.shop.dao.CartDao;
-import com.ezenac.shop.dto.CartVO;
+import com.ezenac.shop.dao.OrderDao;
 import com.ezenac.shop.dto.MemberVO;
+import com.ezenac.shop.dto.OrderVO;
 
-public class CartListAction implements Action {
+public class OrderListAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String url = "mypage/cartList.jsp"; 
-		
+		String url = "mypage/orderList.jsp";
+		int oseq = Integer.parseInt(request.getParameter("oseq"));
 		HttpSession session = request.getSession();
 		MemberVO mvo = (MemberVO)session.getAttribute("loginUser");
 		if(mvo==null) {
 			url="shop.do?command=loginForm";
 		}else {
-			//로그인유저의 아이디로 카트리스트를 검색해서 리턴받습니다.
-			CartDao cdao = CartDao.getInstance();
-			ArrayList<CartVO> list = cdao.selectCart(mvo.getId());
-			request.setAttribute("cartList", list);
-			
+			OrderDao odao = OrderDao.getInstance();
+			//order_view에서 주문번호(oseq)로 검색
+			ArrayList<OrderVO> list = odao.listOrderByOseq(oseq);
 			int totalPrice = 0;
-			for(CartVO cvo:list) 
-				totalPrice += (cvo.getPrice2()*cvo.getQuantity());
+			for(OrderVO ovo : list) totalPrice += ovo.getPrice2()*ovo.getQuantity();
+			
+			request.setAttribute("orderList", list);
 			request.setAttribute("totalPrice", totalPrice);
 		}
 		request.getRequestDispatcher(url).forward(request, response);
+		
 	}
 
 }
