@@ -31,6 +31,9 @@ import com.ezenac.shop.controller.action.mypage.OrderListAction;
 import com.ezenac.shop.controller.action.product.CategoryAction;
 import com.ezenac.shop.controller.action.product.ProductDetailAction;
 import com.ezenac.shop.controller.action.qna.QnaListAction;
+import com.ezenac.shop.controller.action.qna.QnaViewAction;
+import com.ezenac.shop.controller.action.qna.QnaWriteAction;
+import com.ezenac.shop.controller.action.qna.QnaWriteFormAction;
 
 public class ActionFactory {
 	
@@ -74,6 +77,9 @@ public class ActionFactory {
 		else if(command.equals("orderInsertOne")) ac = new OrderInsertOneAction();
 		
 		else if(command.equals("qnaList")) ac = new QnaListAction();
+		else if(command.equals("qnaWriteForm")) ac = new QnaWriteFormAction();
+		else if(command.equals("qnaWrite")) ac = new QnaWriteAction();
+		else if(command.equals("qnaView")) ac = new QnaViewAction();
 		
 		return ac;
 	}

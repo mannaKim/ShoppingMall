@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import com.ezenac.shop.dto.QnaVO;
@@ -21,8 +20,8 @@ public class QnaDao {
 	
 	public ArrayList<QnaVO> listQna(String id) {
 		ArrayList<QnaVO> list = new ArrayList<QnaVO>();
-		
-		String sql = "select * from qna where id=?";
+		String sql = "select * from qna where id=?"
+				+ " order by qseq desc";
 		con = Dbman.getConnection();
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -41,8 +40,43 @@ public class QnaDao {
 			}
 		} catch (SQLException e) { e.printStackTrace();
 		} finally { Dbman.close(con, pstmt, rs); }
-		
 		return list;
+	}
+
+	public void insertQna(QnaVO qvo) {
+		String sql = "insert into qna(qseq,id,subject,content)"
+				+ " values(qna_seq.nextVal,?,?,?)";
+		con = Dbman.getConnection();
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, qvo.getId());
+			pstmt.setString(2, qvo.getSubject());
+			pstmt.setString(3, qvo.getContent());
+			pstmt.executeUpdate();
+		} catch (SQLException e) { e.printStackTrace();
+		} finally { Dbman.close(con, pstmt, rs); }
+	}
+
+	public QnaVO getQna(int qseq) {
+		QnaVO qvo = new QnaVO();
+		String sql = "select * from qna where qseq=?";
+		con = Dbman.getConnection();
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, qseq);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				qvo.setQseq(rs.getInt("qseq"));
+				qvo.setSubject(rs.getString("subject"));
+				qvo.setContent(rs.getString("content"));
+				qvo.setReply(rs.getString("reply"));
+				qvo.setId(rs.getString("id"));
+				qvo.setRep(rs.getString("rep"));
+				qvo.setIndate(rs.getTimestamp("indate"));
+			}
+		} catch (SQLException e) { e.printStackTrace();
+		} finally { Dbman.close(con, pstmt, rs); }
+		return qvo;
 	}
 	
 }
