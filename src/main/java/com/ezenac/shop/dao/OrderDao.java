@@ -123,4 +123,37 @@ public class OrderDao {
 		
 		return list;
 	}
+
+	public int insertOrderOne(int pseq, int quantity, String id) {
+		int oseq = 0;
+		con = Dbman.getConnection();
+		
+		//1. 주문번호(시퀀스자동입력)와 구매자 아이디로 orders테이블에 레코드 추가
+		String sql = "insert into orders(oseq,id) values(orders_seq.nextVal,?)";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			//2. orders테이블에 시퀀스로 입력된 가장 마지막(방금추가한)주문 번호 조회
+			sql = "select max(oseq) as oseq from orders";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) oseq = rs.getInt("oseq");
+			pstmt.close();
+			
+			//3. 전달인수 quantity,pseq와 방금 얻은 oseq로 order_detail에 레코드 추가
+			sql = "insert into order_detail(odseq,quantity,oseq,pseq)"
+					+ " values(order_detail_seq.nextVal,?,?,?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, quantity);
+			pstmt.setInt(2, oseq);
+			pstmt.setInt(3, pseq);
+			pstmt.executeUpdate();
+				
+		} catch (SQLException e) { e.printStackTrace();
+		} finally { Dbman.close(con, pstmt, rs); }
+		return oseq;
+	}
 }

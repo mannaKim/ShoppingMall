@@ -20,7 +20,7 @@ function go_cart_delete(){
 	var count = 0;
 	if(document.formm.cseq.length == undefined){
 		//체크박스가 한개인 경우
-		if(document.formm.cseq.checked==ture) count++;
+		if(document.formm.cseq.checked==true) count++;
 	}else{
 		//체크박스가 두개 이상인 경우
 		for(var i=0; i<document.formm.cseq.length; i++){
@@ -29,7 +29,7 @@ function go_cart_delete(){
 	}
 	
 	if(count==0)
-		alert("삭제할 항목을 선택하세요");
+		alert("삭제할 항목을 선택하세요.");
 	else{
 		document.formm.action="shop.do?command=cartDelete";
 		document.formm.submit();
@@ -39,5 +39,10 @@ function go_cart_delete(){
 
 function go_order_insert(){
 	document.formm.action="shop.do?command=orderInsert";
+	document.formm.submit();
+}
+
+function go_order(){
+	document.formm.action="shop.do?command=orderInsertOne";
 	document.formm.submit();
 }

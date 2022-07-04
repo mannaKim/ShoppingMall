@@ -26,9 +26,11 @@ import com.ezenac.shop.controller.action.mypage.CartListAction;
 import com.ezenac.shop.controller.action.mypage.MypageAction;
 import com.ezenac.shop.controller.action.mypage.OrderDetailAction;
 import com.ezenac.shop.controller.action.mypage.OrderInsertAction;
+import com.ezenac.shop.controller.action.mypage.OrderInsertOneAction;
 import com.ezenac.shop.controller.action.mypage.OrderListAction;
 import com.ezenac.shop.controller.action.product.CategoryAction;
 import com.ezenac.shop.controller.action.product.ProductDetailAction;
+import com.ezenac.shop.controller.action.qna.QnaListAction;
 
 public class ActionFactory {
 	
@@ -69,6 +71,9 @@ public class ActionFactory {
 		else if(command.equals("orderList")) ac = new OrderListAction(); //방금 주문한 주문내역
 		else if(command.equals("mypage")) ac = new MypageAction();
 		else if(command.equals("orderDetail")) ac = new OrderDetailAction();
+		else if(command.equals("orderInsertOne")) ac = new OrderInsertOneAction();
+		
+		else if(command.equals("qnaList")) ac = new QnaListAction();
 		
 		return ac;
 	}

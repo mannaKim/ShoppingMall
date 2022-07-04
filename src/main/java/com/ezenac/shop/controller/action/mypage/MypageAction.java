@@ -68,8 +68,9 @@ public class MypageAction implements Action {
 				OrderVO ovo = orderListByOseq.get(0); 
 				
 				//꺼낸 상품(ovo)의 이름을 '[현재상품의 상품명] 외 n건' 으로 변경
-				ovo.setPname(ovo.getPname()+" 외 "+(orderListByOseq.size()-1)+"건");
-				
+				if(orderListByOseq.size()>1) {
+					ovo.setPname(ovo.getPname()+" 외 "+(orderListByOseq.size()-1)+"건");
+				}
 				//총 금액을 계산
 				int totalPrice = 0;
 				for(OrderVO ovo1 : orderListByOseq)

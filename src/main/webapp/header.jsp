@@ -36,7 +36,7 @@
           </c:choose>
           <li><a href="shop.do?command=cartList">CART</a></li>
           <li><a href="shop.do?command=mypage">MY PAGE</a></li>
-          <li><a href="">Q &amp; A</a></li>
+          <li><a href="shop.do?command=qnaList">Q &amp; A</a></li>
         </ul>
       </nav>
       

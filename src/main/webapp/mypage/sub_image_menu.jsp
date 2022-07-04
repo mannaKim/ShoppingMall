@@ -9,7 +9,7 @@
 <nav id="sub_menu">
   <ul>
     <li><a href="shop.do?command=cartList">장바구니내역</a></li>
-    <li><a href="shop.do?command=myPage">진행중인 주문내역</a></li>
+    <li><a href="shop.do?command=mypage">진행중인 주문내역</a></li>
     <li><a href="shop.do?command=orderAll">총 주문내역</a></li>
     <li><a href="#" onClick="withdrawalConfirm();">회원탈퇴</a></li>
   </ul>

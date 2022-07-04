@@ -6,6 +6,7 @@
   <div id="itemdetail" style="float:left">
     <h1>Item</h1>
     <form method="post" name="formm">
+      <input type="hidden" name="pseq" value="${productVO.pseq}">
       <fieldset>
         <legend>Item Detail Info</legend>
         <span style="float:left; margin-right:20px;">
@@ -14,7 +15,6 @@
         <h2>${productVO.name}</h2>
         <label>가 격 : </label><p>${productVO.price2}원</p>
         <label>수 량 : </label><input type="text" name="quantity" size="2" value="1"><br>
-        <input type="hidden" name="pseq" value="${productVO.pseq}">
       </fieldset>
       <div class="clear"></div>
       <h3 style="font-size:170%;">${productVO.content}</h3><br><br>
