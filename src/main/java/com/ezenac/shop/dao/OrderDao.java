@@ -101,4 +101,26 @@ public class OrderDao {
 		
 		return list;
 	}
+
+	public ArrayList<Integer> selectOseqOrderIng(String id) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		
+		String sql = "select distinct oseq"
+				+ " from order_view"
+				+ " where id=? and result='1'"
+				+ " order by oseq desc";
+		con = Dbman.getConnection();
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				list.add(rs.getInt("oseq"));
+				//list.add(rs.getInt(1)); //필드명을 안쓰고 1을 쓰면 실행결과의 첫번째를 얻어옴
+			}
+		} catch (SQLException e) { e.printStackTrace();
+		} finally { Dbman.close(con, pstmt, rs); }
+		
+		return list;
+	}
 }
