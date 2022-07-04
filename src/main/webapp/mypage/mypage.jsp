@@ -18,8 +18,8 @@
           <td><fmt:formatNumber value="${orderVO.price2}" type="currency"/></td>
           <td><a href="shop.do?command=orderDetail&oseq=${orderVO.oseq}">조회</a></td>
           <td>
-            <c:if test="${orderVO.result.equals('1')}">미처리</c:if>
-            <c:if test="${orderVO.result.equals('2')}">완료</c:if>
+            <c:if test="${orderVO.result=='1'}">미처리</c:if>
+            <c:if test="${orderVO.result=='2'}">완료</c:if>
           </td>
         </tr>
       </c:forEach>

@@ -30,8 +30,8 @@
           <td>${orderVO.quantity}</td>
           <td><fmt:formatNumber value="${orderVO.price2*orderVO.quantity}" type="currency"/></td>
           <td>
-            <c:if test="${orderVO.result.equals('1')}">진행중</c:if>
-            <c:if test="${orderVO.result.equals('2')}"><span style="color:orange">처리 완료</span></c:if>
+            <c:if test="${orderVO.result=='1'}">진행중</c:if>
+            <c:if test="${orderVO.result=='2'}"><span style="color:orange">처리 완료</span></c:if>
           </td>
         </tr>
       </c:forEach>
