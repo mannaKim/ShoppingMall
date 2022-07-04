@@ -12,6 +12,7 @@ import com.ezenac.shop.controller.action.Action;
 import com.ezenac.shop.dao.QnaDao;
 import com.ezenac.shop.dto.MemberVO;
 import com.ezenac.shop.dto.QnaVO;
+import com.ezenac.shop.util.Paging;
 
 public class QnaListAction implements Action {
 
@@ -28,10 +29,21 @@ public class QnaListAction implements Action {
 		}else {
 			//로그인한 아이디로 qna 목록을 조회하고 리턴받습니다. (메서드 이름:listQna)
 			QnaDao qdao = QnaDao.getInstance();
-			ArrayList<QnaVO> qnaList = qdao.listQna(mvo.getId());
+			
+			Paging paging = new Paging();
+			int page = 1;
+			if(request.getParameter("page")!=null)
+				page = Integer.parseInt(request.getParameter("page"));
+			paging.setPage(page);
+			
+			int count = qdao.getAllCount(mvo.getId());
+			paging.setTotalCount(count);
+			
+			ArrayList<QnaVO> qnaList = qdao.listQna(mvo.getId(), paging);
 			
 			//리턴받은 리스크(qnaList)를 리쿼스트에 담습니다.
 			request.setAttribute("qnaList", qnaList);
+			request.setAttribute("paging", paging);
 		}
 		
 		//목적지로 이동

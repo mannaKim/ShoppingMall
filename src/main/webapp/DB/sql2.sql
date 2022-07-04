@@ -91,6 +91,17 @@ values(qna_seq.nextVal,'배송이 많이 지연되고 있습니다.','언제 받
 insert into qna(qseq,subject,content,id)
 values(qna_seq.nextVal,'불량품 교환 문의.','교환 또는 환불 등의 안내가 필요합니다. 유선 안내 부탁드려요.','one');
 
+insert into qna(qseq,subject,content,id)
+values(qna_seq.nextVal,'배송관련 문의입니다.','현재 배송상태와 예상 배송일 답변 부탁드립니다.','scott');
+insert into qna(qseq,subject,content,id)
+values(qna_seq.nextVal,'환불관련','환불 절차 안내 부탁드려요. 배송사 선택은 어떻게 되는지도','scott');
+insert into qna(qseq,subject,content,id)
+values(qna_seq.nextVal,'사이즈 교환 하고 싶어요.','사이즈가 예상보다 작습니다. 교환 절차를 안내해주세요','scott');
+insert into qna(qseq,subject,content,id)
+values(qna_seq.nextVal,'배송이 많이 지연되고 있습니다.','언제 받을 수 있나요?','scott');
+insert into qna(qseq,subject,content,id)
+values(qna_seq.nextVal,'불량품 교환 문의.','교환 또는 환불 등의 안내가 필요합니다. 유선 안내 부탁드려요.','scott');
+
 -- cart 안의 상품번호와 사용자 아이디로 상품이름과 사용자 이름을 함께 조회하는 view 생성
 create or replace view cart_view
 as
