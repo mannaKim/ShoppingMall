@@ -11,15 +11,14 @@ import javax.servlet.http.HttpSession;
 import com.ezenac.shop.controller.action.Action;
 import com.ezenac.shop.dao.AdminDao;
 import com.ezenac.shop.dto.AdminVO;
-import com.ezenac.shop.dto.ProductVO;
+import com.ezenac.shop.dto.QnaVO;
 import com.ezenac.shop.util.Paging;
 
-public class AdminProductListAction implements Action {
+public class AdminQnaListAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String url = "admin/product/productList.jsp";
+		String url = "admin/qna/qnaList.jsp";
 		HttpSession session = request.getSession();
 		AdminVO avo = (AdminVO)session.getAttribute("loginAdmin");
 		if(avo == null) url = "shop.do?command=admin";
@@ -40,11 +39,11 @@ public class AdminProductListAction implements Action {
 				session.removeAttribute("page");
 			}
 			
-			int count = adao.getAllCount("product");
+			int count = adao.getAllCount("qna");
 			paging.setTotalCount(count);
 			
-			ArrayList<ProductVO> productList = adao.listProduct(paging);
-			request.setAttribute("productList", productList);
+			ArrayList<QnaVO> qnaList = adao.listQna(paging);
+			request.setAttribute("qnaList", qnaList);
 			request.setAttribute("paging", paging);
 		}
 		request.getRequestDispatcher(url).forward(request, response);

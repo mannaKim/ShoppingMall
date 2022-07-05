@@ -40,6 +40,10 @@
       </tr>
     </c:forEach>
   </table>
+  <br><br>
+  <jsp:include page="/admin/paging/paging.jsp">
+    <jsp:param value="shop.do?command=adminProductList" name="command"/>
+  </jsp:include>
 </article>
 
 <%@ include file="/admin/footer.jsp" %>
