@@ -22,6 +22,8 @@ import com.ezenac.shop.controller.action.MemberUpdateAction;
 import com.ezenac.shop.controller.action.ResetPwAction;
 import com.ezenac.shop.controller.action.admin.AdminAction;
 import com.ezenac.shop.controller.action.admin.AdminLoginAction;
+import com.ezenac.shop.controller.action.admin.AdminMemberListAction;
+import com.ezenac.shop.controller.action.admin.AdminOrderListAction;
 import com.ezenac.shop.controller.action.admin.AdminProductListAction;
 import com.ezenac.shop.controller.action.admin.AdminQnaListAction;
 import com.ezenac.shop.controller.action.mypage.CartDeleteAction;
@@ -89,7 +91,8 @@ public class ActionFactory {
 		else if(command.equals("adminLogin")) ac = new AdminLoginAction();
 		else if(command.equals("adminProductList")) ac = new AdminProductListAction();
 		else if(command.equals("adminQnaList")) ac = new AdminQnaListAction();
-		
+		else if(command.equals("adminOrderList")) ac = new AdminOrderListAction();
+		else if(command.equals("adminMemberList")) ac = new AdminMemberListAction();
 		
 		return ac;
 	}
