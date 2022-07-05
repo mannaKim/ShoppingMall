@@ -20,6 +20,9 @@ import com.ezenac.shop.controller.action.LoginFormAction;
 import com.ezenac.shop.controller.action.LogoutAction;
 import com.ezenac.shop.controller.action.MemberUpdateAction;
 import com.ezenac.shop.controller.action.ResetPwAction;
+import com.ezenac.shop.controller.action.admin.AdminAction;
+import com.ezenac.shop.controller.action.admin.AdminLoginAction;
+import com.ezenac.shop.controller.action.admin.AdminProductListAction;
 import com.ezenac.shop.controller.action.mypage.CartDeleteAction;
 import com.ezenac.shop.controller.action.mypage.CartInsertAction;
 import com.ezenac.shop.controller.action.mypage.CartListAction;
@@ -80,6 +83,11 @@ public class ActionFactory {
 		else if(command.equals("qnaWriteForm")) ac = new QnaWriteFormAction();
 		else if(command.equals("qnaWrite")) ac = new QnaWriteAction();
 		else if(command.equals("qnaView")) ac = new QnaViewAction();
+		
+		else if(command.equals("admin")) ac = new AdminAction();
+		else if(command.equals("adminLogin")) ac = new AdminLoginAction();
+		else if(command.equals("adminProductList")) ac = new AdminProductListAction();
+		
 		
 		return ac;
 	}

@@ -31,9 +31,20 @@ public class QnaListAction implements Action {
 			QnaDao qdao = QnaDao.getInstance();
 			
 			Paging paging = new Paging();
+			
 			int page = 1;
-			if(request.getParameter("page")!=null)
+			
+			if(request.getParameter("page")!=null) {
+				//파라미터 page가 있을 경우
 				page = Integer.parseInt(request.getParameter("page"));
+				session.setAttribute("page", page);
+			} else if(session.getAttribute("page")!=null) {
+				//파라미터 page가 없고, session에 page가 있을 경우
+				page = (Integer)(session.getAttribute("page"));
+			} else {
+				//파라미터 page도 없고, session에 page도 없을 경우
+				session.removeAttribute("page"); //세션에서 page 삭제
+			}
 			paging.setPage(page);
 			
 			int count = qdao.getAllCount(mvo.getId());
