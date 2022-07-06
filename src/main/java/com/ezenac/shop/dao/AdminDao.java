@@ -41,19 +41,20 @@ public class AdminDao {
 		return avo;
 	}
 
-	public ArrayList<ProductVO> listProduct(Paging paging) {
+	public ArrayList<ProductVO> listProduct(Paging paging, String key) {
 		ArrayList<ProductVO> list = new ArrayList<ProductVO>();
 		String sql = "select * from ("
 				+ "select * from ("
 				+ "select rownum as rn, p.* from "
-				+ "((select * from product order by pseq desc) p)"
+				+ "((select * from product where name like '%'||?||'%' order by pseq desc) p)"
 				+ ") where rn>=?"
 				+ ") where rn<=?";
 		con = Dbman.getConnection();
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, paging.getStartNum());
-			pstmt.setInt(2, paging.getEndNum());
+			pstmt.setString(1, key);
+			pstmt.setInt(2, paging.getStartNum());
+			pstmt.setInt(3, paging.getEndNum());
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				ProductVO pvo = new ProductVO();
@@ -75,12 +76,14 @@ public class AdminDao {
 		return list;
 	}
 
-	public int getAllCount(String tableName) {
+	public int getAllCount(String tableName, String key) {
 		int count = 0;
-		String sql="select count(*) as cnt from "+tableName;
+		String sql="select count(*) as cnt from " + tableName
+				+ " where name like '%'||?||'%'";
 		con = Dbman.getConnection();
 		try {
 			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, key);
 			rs = pstmt.executeQuery();
 			if(rs.next()) count = rs.getInt("cnt");
 		} catch (SQLException e) {e.printStackTrace();
@@ -118,7 +121,7 @@ public class AdminDao {
 	}
 
 	public void inserProduct(ProductVO pvo) {
-		String sql="insert into product(pseq,kind,name,price1,price2,price3,content,image)"
+		String sql = "insert into product(pseq,kind,name,price1,price2,price3,content,image)"
 				+ " values(product_seq.nextVal,?,?,?,?,?,?,?)";
 		con = Dbman.getConnection();
 		try {
@@ -130,6 +133,29 @@ public class AdminDao {
 			pstmt.setInt(5, pvo.getPrice3());
 			pstmt.setString(6, pvo.getContent());
 			pstmt.setString(7, pvo.getImage());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {e.printStackTrace();
+		} finally {Dbman.close(con, pstmt, rs);}
+	}
+
+	public void updateProduct(ProductVO pvo) {
+		String sql = "update product"
+				+ " set kind=?, name=?, price1=?, price2=?, price3=?,"
+				+ " content=?, useyn=?, bestyn=?, image=?"
+				+ " where pseq=?";
+		con = Dbman.getConnection();
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, pvo.getKind());
+			pstmt.setString(2, pvo.getName());
+			pstmt.setInt(3, pvo.getPrice1());
+			pstmt.setInt(4, pvo.getPrice2());
+			pstmt.setInt(5, pvo.getPrice3());
+			pstmt.setString(6, pvo.getContent());
+			pstmt.setString(7, pvo.getUseyn());
+			pstmt.setString(8, pvo.getBestyn());
+			pstmt.setString(9, pvo.getImage());
+			pstmt.setInt(10, pvo.getPseq());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {e.printStackTrace();
 		} finally {Dbman.close(con, pstmt, rs);}

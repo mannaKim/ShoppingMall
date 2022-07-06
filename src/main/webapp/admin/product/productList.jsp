@@ -9,8 +9,10 @@
       <tr>
         <td width="642">
           상품명<input type="text" name="key" value="${key}">
-          <input type="button" class="btn" name="btn_search" value="검색" onClick="">
-          <input type="button" class="btn" name="btn_total" value="전체보기" onClick="">
+          <input type="button" class="btn" name="btn_search" value="검색" 
+          onClick="go_search('adminProductList');">
+          <input type="button" class="btn" name="btn_total" value="전체보기" 
+          onClick="go_total('adminProductList');">
           <input type="button" class="btn" name="btn_write" value="상품등록" onClick="go_wrt();">
         </td>
       </tr>
@@ -26,7 +28,7 @@
       <tr>
         <td height="23" align="center">${productVO.pseq}</td>
         <td style="text-align:left; padding-left:50px;">
-          <a href="#" onClick="">${productVO.name}</a>
+          <a href="#" onClick="go_detail('${productVO.pseq}');">${productVO.name}</a>
         </td>
         <td><fmt:formatNumber value="${productVO.price1}"/></td>
         <td><fmt:formatNumber value="${productVO.price2}"/></td>

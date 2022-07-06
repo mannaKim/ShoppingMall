@@ -40,12 +40,24 @@ public class AdminProductListAction implements Action {
 				session.removeAttribute("page");
 			}
 			
-			int count = adao.getAllCount("product");
+			String key = "";
+			
+			if(request.getParameter("key")!=null) {
+				key = request.getParameter("key");
+				session.setAttribute("key", key);
+			}else if(session.getAttribute("key")!=null) {
+				key = (String)session.getAttribute("key");
+			}else {
+				session.removeAttribute("key");
+			}
+			
+			int count = adao.getAllCount("product", key);
 			paging.setTotalCount(count);
 			
-			ArrayList<ProductVO> productList = adao.listProduct(paging);
+			ArrayList<ProductVO> productList = adao.listProduct(paging, key);
 			request.setAttribute("productList", productList);
 			request.setAttribute("paging", paging);
+			request.setAttribute("key", key);
 		}
 		request.getRequestDispatcher(url).forward(request, response);
 

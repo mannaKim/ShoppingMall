@@ -39,7 +39,8 @@ public class AdminQnaListAction implements Action {
 				session.removeAttribute("page");
 			}
 			
-			int count = adao.getAllCount("qna");
+			String key = "";
+			int count = adao.getAllCount("qna",key);
 			paging.setTotalCount(count);
 			
 			ArrayList<QnaVO> qnaList = adao.listQna(paging);
